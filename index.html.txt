@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐！</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; padding: 20px; }
+        input, button { font-size: 20px; padding: 10px; margin: 10px; }
+        .message { font-size: 24px; font-weight: bold; color: red; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>妈妈，输入你的生日：</h1>
+    <input type="date" id="birthdayInput">
+    <button onclick="checkBirthday()">提交</button>
+    
+    <div class="message" id="message"></div>
+
+    <script>
+        function checkBirthday() {
+            let inputDate = document.getElementById("birthdayInput").value;
+            let momBirthday = "1981年3月8日"; // 这里是你妈妈的生日
+
+            if (inputDate === momBirthday) {
+                document.getElementById("message").innerHTML = "🎉 生日快乐！妈妈！";
+            } else {
+                document.getElementById("message").innerHTML = "这个日期好像不对哦~ 再试试！尝试使用年月日的格式哦";
+            }
+        }
+    </script>
+
+</body>
+</html>
