@@ -3,30 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生日快乐！</title>
+    <title>身份验证</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; padding: 20px; }
+        .image-container img { width: 150px; margin: 10px; cursor: pointer; border: 3px solid transparent; }
+        .image-container img.selected { border: 3px solid red; }
+        .hidden { display: none; }
         input, button { font-size: 20px; padding: 10px; margin: 10px; }
         .message { font-size: 24px; font-weight: bold; color: red; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <h1>妈妈，输入你的生日：</h1>
-    <input type="date" id="birthdayInput">
-    <button onclick="checkBirthday()">提交</button>
+    <h1>请选择您的照片：</h1>
     
+    <!-- 照片选择 -->
+    <div class="image-container">
+        <img src="https://github.com/Bzhiheizi/-/blob/main/2f083d18d0eb3449c8b706cf4263c8b.jpg?raw=true" alt="候选人1" onclick="selectImage(this, 'wrong')">
+        <img src="https://github.com/Bzhiheizi/-/blob/main/356b3f3353f49cad2af539b1e2bb005.jpg?raw=true" alt="正确照片" onclick="selectImage(this, 'correct')">
+        <img src="https://github.com/Bzhiheizi/-/blob/main/5e96f24fed340801acb4f35744d697b.jpg?raw=true" alt="候选人3" onclick="selectImage(this, 'wrong')">
+    </div>
+
+    <!-- 生日输入框（默认隐藏） -->
+    <div id="birthdaySection" class="hidden">
+        <h2>请输入您的生日：</h2>
+        <input type="date" id="birthdayInput">
+        <button onclick="checkBirthday()">提交</button>
+    </div>
+
     <div class="message" id="message"></div>
 
     <script>
+        let isCorrectPerson = false;
+
+        function selectImage(img, status) {
+            // 移除所有图片的选中效果
+            document.querySelectorAll('.image-container img').forEach(image => {
+                image.classList.remove('selected');
+            });
+
+            // 给当前选中的图片加红色边框
+            img.classList.add('selected');
+
+            // 如果选对了，就显示生日输入框
+            if (status === 'correct') {
+                isCorrectPerson = true;
+                document.getElementById("birthdaySection").classList.remove("hidden");
+                document.getElementById("message").innerHTML = "";
+            } else {
+                isCorrectPerson = false;
+                document.getElementById("birthdaySection").classList.add("hidden");
+                document.getElementById("message").innerHTML = "⚠️ 身份认证错误，请重新选择！";
+            }
+        }
+
         function checkBirthday() {
+            if (!isCorrectPerson) {
+                alert("请先正确选择您的照片！");
+                return;
+            }
+
             let inputDate = document.getElementById("birthdayInput").value;
-            let momBirthday = "1981年3月8日"; // 这里是你妈妈的生日
+            let momBirthday = "2025-03-08"; // 这里是你妈妈的生日
 
             if (inputDate === momBirthday) {
-                document.getElementById("message").innerHTML = "🎉 生日快乐！妈妈！";
+                document.getElementById("message").innerHTML = "🎉 生日快乐！妈妈！🎂🎈🎁";
             } else {
-                document.getElementById("message").innerHTML = "这个日期好像不对哦~ 再试试！尝试使用年月日的格式哦";
+                document.getElementById("message").innerHTML = "❌ 这个日期好像不对哦~ 请再试试！";
             }
         }
     </script>
