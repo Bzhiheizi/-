@@ -1,121 +1,29 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>妈妈，生日快乐！</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: "Arial", sans-serif;
-            padding: 20px;
-            background: url("https://github.com/Bzhiheizi/-/blob/main/982a4f69ee3109d481a0050f10c6a69.jpg?raw=true") no-repeat center center fixed;
-            background-size: cover;
-            color: white; /* 让文字更清晰 */
-        }
-        .container {
-            background: rgba(0, 0, 0, 0.6); /* 半透明背景，让文字更清晰 */
-            padding: 20px;
-            border-radius: 15px;
-            display: inline-block;
-            margin-top: 50px;
-        }
-        .image-container img {
-            width: 150px;
-            margin: 10px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            border-radius: 10px;
-        }
-        .image-container img.selected {
-            border: 3px solid red;
-        }
-        .hidden {
-            display: none;
-        }
-        input, button {
-            font-size: 20px;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-        button {
-            background: red;
-            color: white;
-            cursor: pointer;
-        }
-        .message {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
+<audio id="birthdayAudio" src="https://github.com/Bzhiheizi/-/raw/refs/heads/main/FullSizeRender.mp3"></audio>
 
-    <div class="container">
-        <h1>请选择您的照片：</h1>
-
-        <!-- 照片选择 -->
-        <div class="image-container">
-            <img src="https://github.com/Bzhiheizi/-/blob/main/dc5018a9fbdd5c6cd8d45c6ceb5f55b.jpg?raw=true" alt="候选人1" onclick="selectImage(this, 'wrong')">
-            <img src="https://github.com/Bzhiheizi/-/blob/main/356b3f3353f49cad2af539b1e2bb005.jpg?raw=true" alt="正确照片" onclick="selectImage(this, 'correct')">
-            <img src="https://github.com/Bzhiheizi/-/blob/main/5e96f24fed340801acb4f35744d697b.jpg?raw=true" alt="候选人3" onclick="selectImage(this, 'wrong')">
-        </div>
-
-        <!-- 生日输入框（默认隐藏） -->
-        <div id="birthdaySection" class="hidden">
-            <h2>请输入您的生日：</h2>
-            <input type="date" id="birthdayInput">
-            <button onclick="checkBirthday()">提交</button>
-        </div>
-
-        <div class="message" id="message"></div>
-    </div>
-
-    <script>
-        let isCorrectPerson = false;
-
-        function selectImage(img, status) {
-            document.querySelectorAll('.image-container img').forEach(image => {
-                image.classList.remove('selected');
-            });
-
-            img.classList.add('selected');
-
-            if (status === 'correct') {
-                isCorrectPerson = true;
-                document.getElementById("birthdaySection").classList.remove("hidden");
-                document.getElementById("message").innerHTML = "";
-            } else {
-                isCorrectPerson = false;
-                document.getElementById("birthdaySection").classList.add("hidden");
-                document.getElementById("message").innerHTML = "⚠️ 身份认证错误，请重新选择！";
-            }
+<script>
+    function checkBirthday() {
+        if (!isCorrectPerson) {
+            alert("请先正确选择您的照片！");
+            return;
         }
 
-        function checkBirthday() {
-            if (!isCorrectPerson) {
-                alert("请先正确选择您的照片！");
-                return;
-            }
+        let inputDate = document.getElementById("birthdayInput").value;
+        let correctDate = "1981-03-08"; // 现在要求输入完整的出生日期
 
-            let inputDate = document.getElementById("birthdayInput").value;
-            let momBirthday = "1981-03-08";
+        if (inputDate === correctDate) {
+            // 播放生日歌
+            let audio = document.getElementById("birthdayAudio");
+            audio.play();
 
-            if (inputDate === momBirthday) {
-                document.getElementById("message").innerHTML = `
-                    <h2>🎉 妈妈，生日快乐！ 🎂🎈🎁</h2>
-                    <p>愿您每天都平安喜乐，身体健康，永远年轻美丽！</p>
-                    <p>Happy birthday, Mom! Wishing you peace, happiness, and good health every day.</p>
-                    <p>Stay young and beautiful forever! ❤️</p>
-                `;
-            } else {
-                document.getElementById("message").innerHTML = "❌ 这个日期好像不对哦~ 请再试试！";
-            }
+            // 显示祝福信息
+            document.getElementById("message").innerHTML = `
+                <h2>🎉 妈妈，生日快乐！ 🎂🎈🎁</h2>
+                <p>愿您每天都平安喜乐，身体健康，永远年轻美丽！</p>
+                <p>Happy birthday, Mom! Wishing you peace, happiness, and good health every day.</p>
+                <p>Stay young and beautiful forever! ❤️</p>
+            `;
+        } else {
+            document.getElementById("message").innerHTML = "❌ 生日错误，请再试一次！";
         }
-    </script>
-
-</body>
-</html>
+    }
+</script>
